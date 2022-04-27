@@ -2,6 +2,12 @@
 # https://hub.docker.com/_/node
 FROM node:17-slim
 
+#Clone fraud frontend repo
+#RUN git clone https://github.com/ivanek121/GCP_frontend.git
+RUN cd GCP_frontend
+RUN git pull
+RUN cd ..
+
 # Create and change to the app directory.
 WORKDIR /usr/src/app
 
@@ -16,11 +22,7 @@ COPY package*.json ./
 RUN npm install --production
 RUN npm install react
 
-#Clone fraud frontend repo
-#RUN git clone https://github.com/ivanek121/GCP_frontend.git
-RUN cd GCP_frontend
-RUN git pull
-RUN cd ..
+
 # Copy local code to the container image.
 COPY . .
 
