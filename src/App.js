@@ -4,8 +4,6 @@ import React, { useState } from "react";
 export default function App() {
   const [data, setData] = useState(false);
   const [input, setInput] = useState("");
-  const [inputcsv, setInputcsv] = useState();
-  const [result, setResult] = useState();
 
   const handleClick = () => {
     const requestOptions = {
@@ -19,31 +17,28 @@ export default function App() {
     )
       .then((response) => response.json())
       .then((actuaData) => setData(actuaData));
-
-    //data.result === "OK" ? setResult(true) : setResult(false);
-
-    console.log(data);
   };
   return (
-    <>
+    <div style={{ width: "100%" }}>
       <Typography
-        align="center"
+        align="left"
         variant="h2"
         gutterBottom
         component="div"
         style={{
-          backgroundColor: "#ff57a2",
-          paddingTop: 20,
-          paddingBottom: 20,
+          backgroundColor: "#e20074",
+          padding: "1rem",
+          margin: "0rem",
+          color: "white",
         }}
       >
-        T-SYSTEMS
+        T-Systems
       </Typography>
       <div style={{ margin: "10rem" }}>
         <TextField
           fullWidth
           multiline
-          label="line input"
+          label="Transaction string"
           style={{ color: "white" }}
           id="fullWidth"
           onChange={(event) => {
@@ -59,10 +54,33 @@ export default function App() {
             handleClick();
           }}
         >
-          send input
+          Check Transaction
         </Button>
       </div>
-      {data && (data.result === "OK" ? <p>OK</p> : <p>FRAUD</p>)}
-    </>
+      {data &&
+        (data.result === "OK" ? (
+          <div
+            style={{
+              backgroundColor: "green",
+              padding: "1rem",
+              color: "white",
+              textAlign: "center",
+            }}
+          >
+            Transaction OK
+          </div>
+        ) : (
+          <div
+            style={{
+              backgroundColor: "red",
+              padding: "1rem",
+              color: "black",
+              textAlign: "center",
+            }}
+          >
+            FRAUD
+          </div>
+        ))}
+    </div>
   );
 }
