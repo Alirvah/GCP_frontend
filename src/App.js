@@ -2,17 +2,25 @@ import { Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 
 export default function App() {
-  const [data, setData] = useState();
-  const [input, setInput] = useState();
+  const [data, setData] = useState(false);
+  const [input, setInput] = useState("");
   const [inputcsv, setInputcsv] = useState();
   const [result, setResult] = useState();
 
   const handleClick = () => {
-    fetch("https://ccardfrauddetection-s44wmvt6pq-ey.a.run.app/check")
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ trans: input }),
+    };
+    fetch(
+      "https://ccardfrauddetection-s44wmvt6pq-ey.a.run.app/check",
+      requestOptions
+    )
       .then((response) => response.json())
       .then((actuaData) => setData(actuaData));
 
-    data.result === "OK" ? setResult(true) : setResult(false);
+    //data.result === "OK" ? setResult(true) : setResult(false);
 
     console.log(data);
   };
@@ -54,11 +62,7 @@ export default function App() {
           send input
         </Button>
       </div>
-      {result === "OK" ? (
-        <img src="./checked.svg" />
-      ) : (
-        <img src="./cancel.svg" />
-      )}
+      {data && (data.result === "OK" ? <p>OK</p> : <p>FRAUD</p>)}
     </>
   );
 }
