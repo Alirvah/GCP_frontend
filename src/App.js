@@ -1,48 +1,64 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Button, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
 
-export default function App () {
+export default function App() {
+  const [data, setData] = useState();
+  const [input, setInput] = useState();
+  const [inputcsv, setInputcsv] = useState();
+  const [result, setResult] = useState();
+
+  const handleClick = () => {
+    fetch("https://ccardfrauddetection-s44wmvt6pq-ey.a.run.app/check")
+      .then((response) => response.json())
+      .then((actuaData) => setData(actuaData));
+
+    data.result === "OK" ? setResult(true) : setResult(false);
+
+    console.log(data);
+  };
   return (
-    <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to='/'>Home</Link>
-            </li>
-            <li>
-              <Link to='/about'>TEST</Link>
-            </li>
-            <li>
-              <Link to='/users'>Users</Link>
-            </li>
-          </ul>
-        </nav>
+    <>
+      <Typography
+        align="center"
+        variant="h2"
+        gutterBottom
+        component="div"
+        style={{
+          backgroundColor: "#ff57a2",
+          paddingTop: 20,
+          paddingBottom: 20,
+        }}
+      >
+        T-SYSTEMS
+      </Typography>
+      <div style={{ margin: "10rem" }}>
+        <TextField
+          fullWidth
+          multiline
+          label="line input"
+          style={{ color: "white" }}
+          id="fullWidth"
+          onChange={(event) => {
+            setInput(event.target.value);
+          }}
 
-        <Switch>
-          <Route path='/about'>
-            <About />
-          </Route>
-          <Route path='/users'>
-            <Users />
-          </Route>
-          <Route path='/'>
-            <Home />
-          </Route>
-        </Switch>
+          //   style={{ paddingTop: 50 }}
+        />
+        <Button
+          style={{ marginTop: 25 }}
+          variant="contained"
+          onClick={(event) => {
+            handleClick();
+          }}
+        >
+          send input
+        </Button>
       </div>
-    </Router>
+      {result === "OK" ? (
+        <img src="./checked.svg" />
+      ) : (
+        <img src="./cancel.svg" />
+      )}
+    </>
   );
-}
-
-function Home () {
-  return <h2>Home</h2>;
-}
-
-function About () {
-  return <h2>About</h2>;
-}
-
-function Users () {
-  return <h2>Users</h2>;
 }
