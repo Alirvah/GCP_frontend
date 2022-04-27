@@ -1,30 +1,16 @@
-# Use the official lightweight Node.js 12 image.
-# https://hub.docker.com/_/node
-FROM node:17-slim
+# build environment
+FROM node:14-alpine as react-build
+WORKDIR /app
+COPY . ./
+RUN yarn
+RUN yarn build
 
-#Clone fraud frontend repo
-#RUN git clone https://github.com/ivanek121/GCP_frontend.git
-RUN cd ./GCP_frontend
-RUN git pull
-RUN cd ..
-
-# Create and change to the app directory.
-WORKDIR /usr/src/app
-
-# Copy application dependency manifests to the container image.
-# A wildcard is used to ensure both package.json AND package-lock.json are copied.
-# Copying this separately prevents re-running npm install on every code change.
-COPY package*.json ./
-
-# Install dependencies.
-# If you add a package-lock.json speed your build by switching to 'npm ci'.
-# RUN npm ci --only=production
-RUN npm install --production
-RUN npm install react
-
-
-# Copy local code to the container image.
-COPY . .
-
-# Run the web service on container startup.
-CMD ["node", "index.js"]
+# server environment
+FROM nginx:alpine
+COPY nginx.conf /etc/nginx/conf.d/configfile.template
+ENV PORT 8080
+ENV HOST 0.0.0.0
+RUN sh -c "envsubst '\$PORT'  < /etc/nginx/conf.d/configfile.template > /etc/nginx/conf.d/default.conf"
+COPY --from=react-build /app/build /usr/share/nginx/html
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]
