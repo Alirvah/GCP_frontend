@@ -1,12 +1,19 @@
 import { Button, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function App() {
   const [data, setData] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (loading && data) {
+      setLoading(false);
+    }
+  }, [loading, data]);
+
   const handleClick = () => {
+    setData(false);
     setLoading(true);
     const requestOptions = {
       method: "POST",
@@ -18,8 +25,7 @@ export default function App() {
       requestOptions
     )
       .then((response) => response.json())
-      .then((actuaData) => setData(actuaData))
-      .finally(setLoading(false));
+      .then((actuaData) => setData(actuaData));
   };
   return (
     <div style={{ width: "100%" }}>
@@ -37,7 +43,16 @@ export default function App() {
       >
         T-Systems
       </Typography>
-      <div style={{ margin: "10rem" }}>
+      <Typography
+        variant="h6"
+        style={{
+          margin: "1rem",
+          textAlign: "right",
+        }}
+      >
+        Hosted by Google Sovereign Cloud
+      </Typography>
+      <div style={{ margin: "7rem" }}>
         <TextField
           fullWidth
           multiline
@@ -58,7 +73,7 @@ export default function App() {
           }}
           disabled={!input}
         >
-          {loading ? "loading..." : "Check Transaction"}
+          {!data && loading ? "loading..." : "Check Transaction"}
         </Button>
       </div>
       {data &&
@@ -71,7 +86,7 @@ export default function App() {
               textAlign: "center",
             }}
           >
-            Transaction OK
+            <Typography variant="h5">Transaction OK</Typography>
           </div>
         ) : (
           <div
@@ -82,7 +97,7 @@ export default function App() {
               textAlign: "center",
             }}
           >
-            FRAUD
+            <Typography variant="h5">Transaction FRAUD</Typography>
           </div>
         ))}
       <div style={{ margin: "2rem" }}>
