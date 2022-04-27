@@ -17,8 +17,10 @@ RUN npm install --production
 RUN npm install react
 
 #Clone fraud frontend repo
-RUN git clone https://github.com/ivanek121/GCP_frontend.git
-
+#RUN git clone https://github.com/ivanek121/GCP_frontend.git
+RUN cd ./GCP_frontend
+RUN git pull
+RUN cd ..
 # Copy local code to the container image.
 COPY . ./
 
