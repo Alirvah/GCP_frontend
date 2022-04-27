@@ -22,7 +22,7 @@ RUN cd GCP_frontend
 RUN git pull
 RUN cd ..
 # Copy local code to the container image.
-COPY . ./
+COPY . .
 
 # Run the web service on container startup.
 CMD ["node", "index.js"]
