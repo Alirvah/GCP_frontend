@@ -172,7 +172,6 @@ export default function App() {
             margin: "1rem",
             display: "flex",
             justifyContent: "space-between",
-            marginBottom: "3rem",
           }}
         >
           <Typography variant="h6">GCP</Typography>
@@ -188,6 +187,12 @@ export default function App() {
           <Typography variant="h6">Linux</Typography>
           <Typography variant="h6">Bash</Typography>
         </div>
+      </div>
+      <div style={{ margin: "2rem", marginBottom: "3rem" }}>
+        <Typography variant="h6">API:</Typography>
+        <Typography>
+          {`curl 'https://ccardfrauddetection-s44wmvt6pq-ey.a.run.app/check' -H 'Content-Type: application/json' --data-raw '{"trans":"9,-0.33826175242575,1.11959337641566,1.04436655157316,-0.222187276738296,0.49936080649727,-0.24676110061991,0.651583206489972,0.0695385865186387,-0.736727316364109,-0.366845639206541,1.01761446783262,0.836389570307029,1.00684351373408,-0.443522816876142,0.150219101422635,0.739452777052119,-0.540979921943059,0.47667726004282,0.451772964394125,0.203711454727929,-0.246913936910008,-0.633752642406113,-0.12079408408185,-0.385049925313426,-0.0697330460416923,0.0941988339514961,0.246219304619926,0.0830756493473326,3.68"}'`}
+        </Typography>
       </div>
     </div>
   );
