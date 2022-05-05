@@ -165,12 +165,12 @@ export default function App() {
             <a href="https://console.cloud.google.com/run">GCP Cloud Run</a>
           </Typography>
           <Typography variant="h6">
-            <a href="https://github.com/ivanek121/GCP_frontend">
+            <a href="https://github.com/Alirvah/GCP_frontend">
               GitHub - Frontend
             </a>
           </Typography>
           <Typography variant="h6">
-            <a href="https://github.com/ivanek121/GCP_backend">
+            <a href="https://github.com/Alirvah/GCP_backend">
               GitHub - Backend
             </a>
           </Typography>
