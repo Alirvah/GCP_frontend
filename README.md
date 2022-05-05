@@ -2,6 +2,7 @@
 
 Running serverless on GCP
 
+React UI application which uses [Flask Bakend](https://github.com/Alirvah/GCP_backend) to predict if a given credit card transaction string is a fraud or not.
 
 ```
 git clone https://github.com/Alirvah/GCP_frontend.git
